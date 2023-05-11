@@ -1,5 +1,12 @@
+import { LoginPage } from "./Login";
+let input = "";
+
 function App() {
-  return <h1>advanced react2</h1>;
+  return (
+    <div>
+      <LoginPage />
+    </div>
+  );
 }
 
 export default App;
