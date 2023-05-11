@@ -1,7 +1,7 @@
 import data from "./users";
 import "./index.css";
 import { useRef, useState } from "react";
-import MainPage from "./MainPage";
+
 export const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(false);
 
