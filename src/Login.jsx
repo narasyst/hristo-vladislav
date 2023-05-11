@@ -1,7 +1,7 @@
 import data from "./users";
 import "./index.css";
 import { useRef, useState } from "react";
-
+import { Page } from "./Page";
 export const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(false);
 
@@ -20,7 +20,7 @@ export const LoginPage = () => {
   return (
     <div>
       {isLogin ? (
-        <MainPage />
+        <Page />
       ) : (
         <form
           className="form"
