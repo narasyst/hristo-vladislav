@@ -1,7 +1,5 @@
 const data = [
-  { name: "Alekzander" },
-  { name: "Vladislav" },
-  { name: "Zlatin" },
-  { name: "1" },
+  { name: "Peter", password: "12345" },
+  { name: "John", password: "67890" },
 ];
 export default data;

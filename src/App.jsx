@@ -3,7 +3,7 @@ let input = "";
 
 function App() {
   return (
-    <div>
+    <div className="container">
       <LoginPage />
     </div>
   );
