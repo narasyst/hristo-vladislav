@@ -1,21 +1,17 @@
 import data from "./users";
 import "./index.css";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Page } from "./Page";
 import { Button, TextField } from "@mui/material";
 export const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(false);
 
-  const name = useRef("");
-  const password = useRef("");
+  const input = { name: "", password: "" };
 
   const handleSubmission = (e) => {
     e.preventDefault();
     for (let i = 0; i < data.length; i++) {
-      if (
-        name.current == data[i].name &&
-        password.current == data[i].password
-      ) {
+      if (input.name == data[i].name && input.password == data[i].password) {
         setIsLogin(true);
         return;
       }
@@ -38,9 +34,8 @@ export const LoginPage = () => {
                 id="name"
                 name="name"
                 className="form-input"
-                ref={name}
                 onChange={(e) => {
-                  name.current = e.target.value;
+                  input.name = e.target.value;
                 }}
               />
             </div>
@@ -53,9 +48,8 @@ export const LoginPage = () => {
                 id="password"
                 name="password"
                 className="form-input"
-                ref={password}
                 onChange={(e) => {
-                  password.current = e.target.value;
+                  input.password = e.target.value;
                 }}
               />
             </div>

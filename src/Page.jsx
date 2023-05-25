@@ -6,24 +6,24 @@ import useFetch from "./useFetch";
 import { TextField, Button } from "@mui/material";
 
 export const Page = () => {
-  const input = useRef("");
-  const url = useRef("");
+  const ref = useRef({ input: "", url: "" });
 
   const [isDone, setIsDone] = useState(false);
 
   const handleSubmission = (e) => {
     e.preventDefault();
-    url.current = `https://restcountries.com/v2/name/${input.current.toLowerCase()}`;
+    ref.current.url = `https://restcountries.com/v2/name/${ref.current.input.toLowerCase()}`;
+
     setIsDone(true);
   };
 
   return (
     <div>
       {isDone ? (
-        <Country url={url.current} />
+        <Country url={ref.current.url} />
       ) : (
         <div className="input-container">
-          <form className="form" ref={input} onSubmit={handleSubmission}>
+          <form className="form" onSubmit={handleSubmission}>
             <TextField
               label="Country"
               style={{ marginTop: 30 }}
@@ -31,9 +31,8 @@ export const Page = () => {
               id="country"
               name="country"
               className="form-input"
-              ref={input}
               onChange={(e) => {
-                input.current = e.target.value;
+                ref.current.input = e.target.value;
               }}
             />
             <Button variant="contained" type="submit" style={{ marginTop: 30 }}>
@@ -45,14 +44,15 @@ export const Page = () => {
     </div>
   );
 };
-const Country = (props) => {
-  const { isError, isLoading, data } = useFetch(props.url);
+const Country = ({ url }) => {
+  console.log(url);
+  const { isError, isLoading, data } = useFetch(url);
 
   if (isLoading) {
     return <h2>Loading...</h2>;
   }
   if (isError) {
-    return <h2>Is error</h2>;
+    return <h2>Error!</h2>;
   }
 
   return <Info data={data[0]} />;
