@@ -7,6 +7,7 @@ const useFetch = (url) => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
+    console.log("useEffect invoked");
     // change name
     const fetchData = async () => {
       try {

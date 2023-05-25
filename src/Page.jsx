@@ -6,6 +6,7 @@ import useFetch from "./useFetch";
 import { TextField, Button } from "@mui/material";
 
 export const Page = () => {
+  console.log("page rendered");
   const ref = useRef({ input: "", url: "" });
 
   const [isDone, setIsDone] = useState(false);
@@ -15,6 +16,7 @@ export const Page = () => {
     ref.current.url = `https://restcountries.com/v2/name/${ref.current.input.toLowerCase()}`;
 
     setIsDone(true);
+    console.log("state updated");
   };
 
   return (
@@ -45,7 +47,8 @@ export const Page = () => {
   );
 };
 const Country = ({ url }) => {
-  console.log(url);
+  console.log("country rendered");
+
   const { isError, isLoading, data } = useFetch(url);
 
   if (isLoading) {
