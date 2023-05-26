@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { useReducer, useRef, useState } from "react";
 import { GET_CAPITAL, GET_SUBREGION } from "./useReducer/actions";
 import reducer from "./useReducer/reducer";
 import useFetch from "./useFetch";
 import { TextField, Button } from "@mui/material";
+import "./index.css";
 
 export const Page = () => {
   console.log("page rendered");
@@ -16,13 +17,30 @@ export const Page = () => {
     ref.current.url = `https://restcountries.com/v2/name/${ref.current.input.toLowerCase()}`;
 
     setIsDone(true);
+
     console.log("state updated");
+  };
+
+  const Country = ({ url }) => {
+    const { isLoading, isError, data } = useFetch(url);
+    console.log("country rendered");
+
+    if (isLoading) {
+      return <h2>Loading...</h2>;
+    }
+    if (isError) {
+      return <h2>Error!</h2>;
+    }
+
+    return <Info data={data[0]} />;
   };
 
   return (
     <div>
       {isDone ? (
-        <Country url={ref.current.url} />
+        <>
+          <Country url={ref.current.url} />
+        </>
       ) : (
         <div className="input-container">
           <form className="form" onSubmit={handleSubmission}>
@@ -37,7 +55,13 @@ export const Page = () => {
                 ref.current.input = e.target.value;
               }}
             />
-            <Button variant="contained" type="submit" style={{ marginTop: 30 }}>
+
+            <Button
+              className="btn"
+              variant="contained"
+              type="submit"
+              style={{ marginTop: 30 }}
+            >
               get
             </Button>
           </form>
@@ -45,20 +69,6 @@ export const Page = () => {
       )}
     </div>
   );
-};
-const Country = ({ url }) => {
-  console.log("country rendered");
-
-  const { isError, isLoading, data } = useFetch(url);
-
-  if (isLoading) {
-    return <h2>Loading...</h2>;
-  }
-  if (isError) {
-    return <h2>Error!</h2>;
-  }
-
-  return <Info data={data[0]} />;
 };
 
 const Info = (props) => {
@@ -78,25 +88,19 @@ const Info = (props) => {
   };
 
   return (
-    <div>
-      <Button
-        variant="contained"
-        style={{
-          marginTop: "2rem",
-          marginRight: "2rem",
-        }}
-        onClick={getCapital}
-      >
-        {state.capital || "get capital"}
-      </Button>
-
-      <Button
-        variant="contained"
-        style={{ marginTop: "2rem" }}
-        onClick={getSubregion}
-      >
-        {state.subregion || "get subregion"}
-      </Button>
-    </div>
+    <>
+      <div className="info-container">
+        <Button className="btn" variant="contained" onClick={getCapital}>
+          get capital
+        </Button>
+        <h2 className="info">{state.capital}</h2>
+      </div>
+      <div className="info-container">
+        <Button className="btn" variant="contained" onClick={getSubregion}>
+          {state.subregion || "get subregion"}
+        </Button>
+        <h2 className="info">{state.subregion}</h2>
+      </div>
+    </>
   );
 };

@@ -24,7 +24,7 @@ export const LoginPage = () => {
       {isLogin ? (
         <Page />
       ) : (
-        <div className="input-wrapper">
+        <div className="input-container">
           <form className="form" onSubmit={handleSubmission}>
             <div>
               <TextField
@@ -54,7 +54,12 @@ export const LoginPage = () => {
               />
             </div>
 
-            <Button variant="outlined" type="submit" style={{ marginTop: 30 }}>
+            <Button
+              className="btn"
+              variant="outlined"
+              type="submit"
+              style={{ marginTop: 30 }}
+            >
               Log in
             </Button>
           </form>

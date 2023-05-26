@@ -1,14 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const useFetch = (url) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  // change state value
   const [data, setData] = useState(null);
 
+  const isInitialMount = useRef(true);
+
   useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      return;
+    }
     console.log("useEffect invoked");
-    // change name
+
     const fetchData = async () => {
       try {
         const resp = await fetch(url);
@@ -18,17 +24,16 @@ const useFetch = (url) => {
           setIsLoading(false);
           return;
         }
-        // change to response
+
         const response = await resp.json();
         setData(response);
       } catch (error) {
         setIsError(true);
         console.log(error);
       }
-      // hide loading
+
       setIsLoading(false);
     };
-    // invoke fetch data
     fetchData();
   }, []);
 
